@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>InterEQ – Dashboard</title>
+  <meta name="description" content="Your InterEQ dashboard — manage your account and agent automation."/>
+  <link rel="stylesheet" href="css/styles.css"/>
+  <style>
+    body { background: #F3F6FB; }
+
+    /* Top nav */
+    .topnav {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 32px;
+      height: 60px;
+      gap: 16px;
+    }
+    .topnav .logo-wrap { margin-bottom: 0; gap: 10px; }
+    .topnav .logo-text { font-size: 20px; }
+    .topnav .logo-icon { width: 36px; height: 36px; }
+    .topnav-right {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 13.5px;
+      color: var(--text-muted);
+    }
+    .user-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #EFF6FF;
+      border-radius: 20px;
+      padding: 5px 14px 5px 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--blue-primary);
+    }
+    .user-avatar {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--blue-primary);
+      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 700;
+    }
+    .logout-btn {
+      background: none; border: none; cursor: pointer;
+      color: var(--text-muted); font-size: 13px;
+      font-family: 'Inter', sans-serif;
+      padding: 6px 10px; border-radius: 4px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .logout-btn:hover { background: #F3F4F6; color: var(--text-dark); }
+
+    /* Main content */
+    .main { max-width: 1000px; margin: 0 auto; padding: 36px 24px; }
+
+    .page-heading { font-size: 22px; font-weight: 700; color: var(--text-dark); margin-bottom: 6px; }
+    .page-sub     { font-size: 14px; color: var(--text-muted); margin-bottom: 28px; }
+
+    /* Stat cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .stat-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px 22px;
+    }
+    .stat-label { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .stat-value { font-size: 28px; font-weight: 800; color: var(--text-dark); margin: 6px 0 2px; }
+    .stat-delta { font-size: 12px; font-weight: 500; color: #16A34A; }
+
+    /* Agent panel */
+    .panel {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px 28px;
+      margin-bottom: 20px;
+    }
+    .panel-title {
+      font-size: 15px; font-weight: 700;
+      color: var(--text-dark); margin-bottom: 16px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .status-dot {
+      width: 9px; height: 9px; border-radius: 50%;
+      background: #22C55E;
+      animation: blink 1.4s ease-in-out infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; } 50% { opacity: 0.2; }
+    }
+
+    /* Activity log */
+    .log-list { list-style: none; }
+    .log-item {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 12px 0; border-bottom: 1px solid #F3F4F6;
+      font-size: 13.5px;
+    }
+    .log-item:last-child { border-bottom: none; }
+    .log-icon {
+      width: 30px; height: 30px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; flex-shrink: 0;
+    }
+    .log-icon.success { background: #F0FDF4; }
+    .log-icon.info    { background: #EFF6FF; }
+    .log-icon.warn    { background: #FFF7ED; }
+    .log-meta  { color: var(--text-dark); font-weight: 500; }
+    .log-time  { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
+
+    .trigger-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--blue-primary), var(--blue-mid));
+      color: #fff;
+      font-size: 13.5px;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      border: none;
+      border-radius: 6px;
+      padding: 11px 22px;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+    }
+    .trigger-btn:hover   { opacity: 0.9; }
+    .trigger-btn:active  { transform: translateY(1px); }
+  </style>
+</head>
+<body>
+
+<!-- Top Nav -->
+<nav class="topnav">
+  <div class="logo-wrap">
+    <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"></svg>
+    <div class="logo-text">InterEQ</div>
+  </div>
+  <div class="topnav-right">
+    <div class="user-chip">
+      <div class="user-avatar">G</div>
+      GokulRaj
+    </div>
+    <button class="logout-btn" onclick="window.location.href='login.html'">Sign out</button>
+  </div>
+</nav>
+
+<!-- Main -->
+<main class="main">
+  <h1 class="page-heading">Dashboard</h1>
+  <p class="page-sub">MFA Automation Agent — Demo Environment</p>
+
+  <!-- Stats -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-label">Total Logins Automated</div>
+      <div class="stat-value" id="statLogins">0</div>
+      <div class="stat-delta">↑ via agent</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">MFA Challenges Solved</div>
+      <div class="stat-value" id="statMfa">0</div>
+      <div class="stat-delta">↑ success rate 100%</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Agent Status</div>
+      <div class="stat-value" style="font-size:18px; margin-top:10px; color:#16A34A;">● Active</div>
+      <div class="stat-delta">Running in demo mode</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Avg. Resolution Time</div>
+      <div class="stat-value" id="statTime">—</div>
+      <div class="stat-delta">per MFA challenge</div>
+    </div>
+  </div>
+
+  <!-- Agent trigger -->
+  <div class="panel">
+    <div class="panel-title">
+      <span class="status-dot"></span>
+      Agent Control
+    </div>
+    <p style="font-size:13.5px; color:var(--text-muted); margin-bottom:18px;">
+      Trigger the MFA automation agent to simulate a login flow. The agent will
+      navigate to the login page, enter credentials, and automatically resolve the MFA challenge.
+    </p>
+    <button class="trigger-btn" id="triggerBtn" onclick="simulateAgent()">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <polygon points="5 3 19 12 5 21 5 3"/>
+      </svg>
+      Run Agent Demo
+    </button>
+    <div class="alert" id="agentAlert" style="margin-top:14px;"></div>
+  </div>
+
+  <!-- Activity log -->
+  <div class="panel">
+    <div class="panel-title">Activity Log</div>
+    <ul class="log-list" id="logList">
+      <li class="log-item">
+        <div class="log-icon info">🔐</div>
+        <div>
+          <div class="log-meta">Awaiting first agent run…</div>
+          <div class="log-time">No activity yet</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</main>
+
+<script src="js/main.js"></script>
+<script>
+  let loginCount = 0, mfaCount = 0;
+  const times = [];
+
+  function addLog(icon, cls, msg, time) {
+    const list = document.getElementById('logList');
+    if (list.querySelector('.log-item .log-meta')?.textContent === 'Awaiting first agent run…') {
+      list.innerHTML = '';
+    }
+    const li = document.createElement('li');
+    li.className = 'log-item';
+    li.innerHTML = `
+      <div class="log-icon ${cls}">${icon}</div>
+      <div>
+        <div class="log-meta">${msg}</div>
+        <div class="log-time">${time}</div>
+      </div>`;
+    list.prepend(li);
+  }
+
+  async function simulateAgent() {
+    const btn = document.getElementById('triggerBtn');
+    const alert = document.getElementById('agentAlert');
+    btn.disabled = true;
+    btn.innerHTML = `<span style="animation:blink 1s infinite;display:inline-block">⏳</span>&nbsp; Agent running…`;
+    alert.className = 'alert info';
+    alert.textContent = 'Agent: Navigating to login page…';
+
+    const now = () => new Date().toLocaleTimeString();
+    const start = Date.now();
+
+    await delay(900);
+    addLog('🚀', 'info', 'Agent initiated login flow', now());
+    alert.textContent = 'Agent: Entering credentials…';
+
+    await delay(800);
+    loginCount++;
+    document.getElementById('statLogins').textContent = loginCount;
+    addLog('✅', 'success', 'Credentials submitted successfully', now());
+    alert.textContent = 'Agent: Waiting for MFA challenge…';
+
+    await delay(1000);
+    addLog('🔑', 'info', 'MFA challenge received — extracting code…', now());
+    alert.textContent = 'Agent: Fetching OTP from inbox…';
+
+    await delay(1200);
+    mfaCount++;
+    document.getElementById('statMfa').textContent = mfaCount;
+    addLog('🤖', 'success', 'OTP extracted and submitted by agent', now());
+    alert.textContent = 'Agent: Verifying MFA code…';
+
+    await delay(700);
+    const elapsed = ((Date.now() - start) / 1000).toFixed(1);
+    times.push(parseFloat(elapsed));
+    const avg = (times.reduce((a,b)=>a+b,0) / times.length).toFixed(1);
+    document.getElementById('statTime').textContent = `${avg}s`;
+    addLog('🎉', 'success', `Login completed in ${elapsed}s`, now());
+
+    alert.textContent = `✓ Agent successfully completed MFA in ${elapsed}s`;
+    alert.className = 'alert success';
+
+    btn.disabled = false;
+    btn.innerHTML = `<svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg> Run Agent Demo`;
+  }
+
+  function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+</script>
+</body>
+</html>

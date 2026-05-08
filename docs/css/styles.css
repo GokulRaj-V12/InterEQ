@@ -1,0 +1,288 @@
+/* ============================================
+   InterEQ — Global Design System
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --blue-primary:  #2176AE;
+  --blue-dark:     #1a5f96;
+  --blue-mid:      #3A8FCC;
+  --blue-light:    #5BAFD6;
+  --orange:        #E84C1E;
+  --blue-accent:   #1B5EA7;
+  --text-dark:     #111827;
+  --text-mid:      #374151;
+  --text-muted:    #6B7280;
+  --border:        #D1D5DB;
+  --white:         #FFFFFF;
+  --bg-subtle:     #F9FAFB;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Inter', sans-serif;
+  color: var(--text-dark);
+}
+
+a {
+  text-decoration: none;
+  color: var(--blue-primary);
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: var(--blue-dark);
+}
+
+/* ── SPLIT LAYOUT ────────────────────────── */
+.split-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ── LEFT DECORATIVE PANEL ───────────────── */
+.left-panel {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #1a6fad 0%, #2b8fd4 40%, #4ab0e8 80%, #5ec2f5 100%);
+}
+
+.arc-shapes { position: absolute; inset: 0; overflow: hidden; }
+
+.arc {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.12);
+}
+.arc-1 { width:600px; height:600px; top:-150px; left:-100px; animation: rotateArc 20s linear infinite; }
+.arc-2 { width:500px; height:500px; bottom:-100px; right:-150px; animation: rotateArc 25s linear infinite reverse; }
+.arc-3 { width:350px; height:350px; top:40%; left:30%; border-color:rgba(255,255,255,0.07); animation: rotateArc 15s linear infinite; }
+
+@keyframes rotateArc {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.lines-overlay { position: absolute; inset: 0; overflow: hidden; }
+
+.line {
+  position: absolute;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.18), transparent);
+  height: 1px;
+  width: 200%;
+  animation: sweepLine 10s ease-in-out infinite;
+}
+.line:nth-child(1) { top:20%; transform:rotate(-22deg); animation-delay:0s; }
+.line:nth-child(2) { top:38%; transform:rotate(-12deg); animation-delay:1s;  width:180%; }
+.line:nth-child(3) { top:55%; transform:rotate(-30deg); animation-delay:2s; }
+.line:nth-child(4) { top:70%; transform:rotate(-8deg);  animation-delay:1.5s; width:160%; }
+.line:nth-child(5) { top:15%; transform:rotate(15deg);  animation-delay:3s; }
+.line:nth-child(6) { top:80%; transform:rotate(-40deg); animation-delay:0.5s; width:220%; }
+
+@keyframes sweepLine {
+  0%, 100% { opacity: 0.4; }
+  50%       { opacity: 0.8; }
+}
+
+.orb-container { position:absolute; bottom:-60px; left:-60px; width:340px; height:340px; }
+.orb { border-radius:50%; border:1.5px solid rgba(255,255,255,0.15); position:absolute; animation:pulseOrb 6s ease-in-out infinite; }
+.orb-1 { width:340px; height:340px; top:0;    left:0;    animation-delay:0s; }
+.orb-2 { width:260px; height:260px; top:40px; left:40px; animation-delay:0.6s; }
+.orb-3 { width:190px; height:190px; top:75px; left:75px; animation-delay:1.2s; }
+.orb-4 { width:120px; height:120px; top:110px;left:110px;background:rgba(255,255,255,0.04); animation-delay:1.8s; }
+.orb-5 { width:60px;  height:60px;  top:140px;left:140px;background:rgba(0,200,230,0.15);  animation-delay:2.4s; }
+
+@keyframes pulseOrb {
+  0%, 100% { opacity:0.6; transform:scale(1); }
+  50%       { opacity:1;   transform:scale(1.02); }
+}
+
+.left-brand {
+  position: absolute;
+  bottom: 40px; left: 48px;
+  color: rgba(255,255,255,0.45);
+  font-size: 13px;
+}
+
+/* ── RIGHT PANEL ─────────────────────────── */
+.right-panel {
+  width: 400px;
+  min-width: 340px;
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+  padding: 48px 44px 32px;
+  position: relative;
+  z-index: 10;
+}
+
+/* ── LOGO ────────────────────────────────── */
+.logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 52px;
+}
+.logo-icon  { width:46px; height:46px; flex-shrink:0; }
+.logo-text  { font-size:26px; font-weight:800; color:var(--text-dark); letter-spacing:-0.5px; }
+
+/* ── FORM ────────────────────────────────── */
+.form-section-label {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-bottom: 18px;
+  letter-spacing: 0.01em;
+}
+
+.form-group { margin-bottom: 12px; }
+
+.form-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 4px;
+  font-size: 13.5px;
+  font-family: 'Inter', sans-serif;
+  color: var(--text-dark);
+  background: #fff;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.form-input::placeholder { color: #9CA3AF; }
+.form-input:focus {
+  border-color: var(--blue-primary);
+  box-shadow: 0 0 0 3px rgba(33,118,174,0.12);
+}
+.form-input.error { border-color: #DC2626; }
+
+.password-wrapper { position: relative; }
+.password-toggle {
+  position: absolute; right:12px; top:50%; transform:translateY(-50%);
+  background:none; border:none; cursor:pointer;
+  color:#9CA3AF; padding:4px; display:flex; align-items:center;
+  transition: color 0.2s;
+}
+.password-toggle:hover { color: var(--blue-primary); }
+
+.error-msg {
+  display: none;
+  color: #DC2626;
+  font-size: 12px;
+  margin-top: 6px;
+  font-weight: 500;
+}
+
+/* ── BUTTON ──────────────────────────────── */
+.btn-primary {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 22px;
+  background: var(--blue-primary);
+  color: #fff;
+  font-size: 13.5px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  letter-spacing: 0.01em;
+  transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+}
+.btn-primary:hover {
+  background: var(--blue-dark);
+  box-shadow: 0 4px 14px rgba(33,118,174,0.35);
+}
+.btn-primary:active  { transform: translateY(1px); }
+.btn-primary.loading { pointer-events:none; opacity:0.7; }
+
+.btn-secondary {
+  display: inline-block;
+  padding: 9px 20px;
+  background: transparent;
+  color: var(--blue-primary);
+  font-size: 13.5px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  border: 1.5px solid var(--blue-primary);
+  border-radius: 4px;
+  cursor: pointer;
+  letter-spacing: 0.01em;
+  transition: background 0.2s, color 0.2s;
+}
+.btn-secondary:hover { background: var(--blue-primary); color: #fff; }
+
+/* ── ALERT BANNER ────────────────────────── */
+.alert {
+  padding: 10px 14px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 14px;
+  display: none;
+}
+.alert.error   { background:#FEF2F2; color:#DC2626; border:1px solid #FECACA; display:block; }
+.alert.success { background:#F0FDF4; color:#16A34A; border:1px solid #BBF7D0; display:block; }
+.alert.info    { background:#EFF6FF; color:#2563EB; border:1px solid #BFDBFE; display:block; }
+
+/* ── MFA CODE INPUTS ─────────────────────── */
+.otp-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.otp-input {
+  width: 44px;
+  height: 50px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+.otp-input:focus {
+  border-color: var(--blue-primary);
+  box-shadow: 0 0 0 3px rgba(33,118,174,0.12);
+}
+
+/* ── FORGOT + LINKS ──────────────────────── */
+.forgot-link {
+  display: inline-block;
+  margin-top: 18px;
+  font-size: 13px;
+  color: var(--blue-primary);
+  font-weight: 500;
+}
+.forgot-link:hover { text-decoration: underline; }
+
+/* ── SPACER & FOOTER ─────────────────────── */
+.spacer { flex: 1; }
+
+.page-footer {
+  font-size: 11.5px;
+  color: #9CA3AF;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.page-footer a { color: #9CA3AF; }
+.page-footer a:hover { color: var(--blue-primary); }
+
+/* ── RESPONSIVE ──────────────────────────── */
+@media (max-width: 640px) {
+  .split-layout { flex-direction: column; }
+  .left-panel   { min-height: 200px; flex: none; }
+  .right-panel  { width: 100%; padding: 36px 28px 28px; }
+}

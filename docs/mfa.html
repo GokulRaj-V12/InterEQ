@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>InterEQ – Verify Identity (MFA)</title>
+  <meta name="description" content="Complete multi-factor authentication to access your InterEQ account."/>
+  <link rel="stylesheet" href="css/styles.css"/>
+  <style>
+    .mfa-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 22px;
+      line-height: 1.6;
+    }
+    .mfa-subtitle strong { color: var(--text-dark); }
+    .resend-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .resend-btn {
+      background: none; border: none; cursor: pointer;
+      color: var(--blue-primary); font-size: 13px;
+      font-weight: 600; font-family: 'Inter', sans-serif;
+      padding: 0; transition: color 0.2s;
+    }
+    .resend-btn:hover { color: var(--blue-dark); }
+    .resend-btn:disabled { color: var(--text-muted); cursor: default; }
+    .countdown { font-weight: 600; color: var(--orange); }
+
+    /* Agent status badge */
+    .agent-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #EFF6FF;
+      border: 1px solid #BFDBFE;
+      border-radius: 20px;
+      padding: 5px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #1D4ED8;
+      margin-bottom: 20px;
+    }
+    .agent-badge .dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #22C55E;
+      animation: blink 1.4s ease-in-out infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.2; }
+    }
+  </style>
+</head>
+<body>
+<div class="split-layout">
+
+  <div class="left-panel" role="presentation" aria-hidden="true">
+    <div class="arc-shapes">
+      <div class="arc arc-1"></div><div class="arc arc-2"></div><div class="arc arc-3"></div>
+    </div>
+    <div class="lines-overlay">
+      <div class="line"></div><div class="line"></div><div class="line"></div>
+      <div class="line"></div><div class="line"></div><div class="line"></div>
+    </div>
+    <div class="orb-container" aria-hidden="true">
+      <div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div>
+      <div class="orb orb-4"></div><div class="orb orb-5"></div>
+    </div>
+    <div class="left-brand">© 2025 InterEQ</div>
+  </div>
+
+  <div class="right-panel">
+    <div class="logo-wrap">
+      <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"></svg>
+      <div class="logo-text">InterEQ</div>
+    </div>
+
+    <!-- Agent status indicator -->
+    <div class="agent-badge" id="agentBadge" style="display:none;">
+      <span class="dot"></span> Agent is handling MFA…
+    </div>
+
+    <p class="form-section-label">Two-factor authentication</p>
+    <p class="mfa-subtitle">
+      Enter the 6-digit code sent to <strong id="emailDisplay">your email</strong>.
+      The code expires in <span class="countdown" id="countdown">10:00</span>.
+    </p>
+
+    <div class="alert" id="alertBanner" role="alert"></div>
+
+    <form id="mfaForm" novalidate>
+      <div class="otp-group" id="otpGroup" role="group" aria-label="One-time password">
+        <input class="otp-input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 1"/>
+        <input class="otp-input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 2"/>
+        <input class="otp-input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 3"/>
+        <input class="otp-input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 4"/>
+        <input class="otp-input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 5"/>
+        <input class="otp-input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 6"/>
+      </div>
+
+      <button type="submit" class="btn-primary" id="verifyBtn">Verify</button>
+
+      <div class="resend-row">
+        <span>Didn't receive it?</span>
+        <button type="button" class="resend-btn" id="resendBtn" disabled>
+          Resend code (<span id="resendCountdown">30</span>s)
+        </button>
+      </div>
+    </form>
+
+    <div style="margin-top:18px;">
+      <a href="login.html" style="font-size:13px; color:var(--text-muted);">
+        ← Back to Sign in
+      </a>
+    </div>
+
+    <div class="spacer"></div>
+    <footer class="page-footer">
+      <span>© 2025 InterEQ</span>
+      <a href="#">www.intereq.com</a>
+      <a href="#">Privacy Policy</a>
+    </footer>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+<script>
+  // ── Countdown timer (10 min) ──────────────
+  const countdownEl = document.getElementById('countdown');
+  let total = 600;
+  const timer = setInterval(() => {
+    total--;
+    const m = String(Math.floor(total / 60)).padStart(2, '0');
+    const s = String(total % 60).padStart(2, '0');
+    countdownEl.textContent = `${m}:${s}`;
+    if (total <= 0) {
+      clearInterval(timer);
+      countdownEl.textContent = 'Expired';
+      document.getElementById('verifyBtn').disabled = true;
+    }
+  }, 1000);
+
+  // ── Resend cooldown ───────────────────────
+  const resendBtn = document.getElementById('resendBtn');
+  const resendCount = document.getElementById('resendCountdown');
+  let resendSec = 30;
+  const resendTimer = setInterval(() => {
+    resendSec--;
+    resendCount.textContent = resendSec;
+    if (resendSec <= 0) {
+      clearInterval(resendTimer);
+      resendBtn.disabled = false;
+      resendBtn.textContent = 'Resend code';
+    }
+  }, 1000);
+
+  resendBtn.addEventListener('click', () => {
+    const banner = document.getElementById('alertBanner');
+    banner.textContent = 'A new code has been sent.';
+    banner.className = 'alert info';
+    resendBtn.disabled = true;
+    resendBtn.textContent = 'Sent!';
+    setTimeout(() => { resendBtn.textContent = 'Resend code'; }, 3000);
+  });
+
+  // ── Form submit ───────────────────────────
+  const mfaForm  = document.getElementById('mfaForm');
+  const verifyBtn = document.getElementById('verifyBtn');
+  const alertBanner = document.getElementById('alertBanner');
+
+  mfaForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    alertBanner.className = 'alert';
+
+    const digits = [...document.querySelectorAll('.otp-input')].map(i => i.value).join('');
+    if (digits.length < 6) {
+      alertBanner.textContent = 'Please enter all 6 digits.';
+      alertBanner.className = 'alert error';
+      return;
+    }
+
+    verifyBtn.classList.add('loading');
+    verifyBtn.textContent = 'Verifying…';
+
+    try {
+      // When backend is live: const data = await apiCall('/mfa/verify', { code: digits });
+      await new Promise(r => setTimeout(r, 1200));
+      window.location.href = 'dashboard.html';
+    } catch (err) {
+      alertBanner.textContent = 'Verification failed. Please try again.';
+      alertBanner.className = 'alert error';
+      verifyBtn.classList.remove('loading');
+      verifyBtn.textContent = 'Verify';
+    }
+  });
+
+  // ── Agent automation hook ─────────────────
+  // When the agent fills the code, call: window.agentFillOTP('123456')
+  window.agentFillOTP = function(code) {
+    document.getElementById('agentBadge').style.display = 'inline-flex';
+    const inputs = document.querySelectorAll('.otp-input');
+    [...code].forEach((d, i) => {
+      setTimeout(() => {
+        inputs[i].value = d;
+        inputs[i].classList.add('agent-filled');
+      }, i * 120);
+    });
+    setTimeout(() => mfaForm.dispatchEvent(new Event('submit')), code.length * 120 + 400);
+  };
+</script>
+</body>
+</html>
