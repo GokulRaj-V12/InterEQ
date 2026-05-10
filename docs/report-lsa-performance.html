@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>InterIQ – LSA Campaigns Performance</title>
+  <meta name="description" content="LSA Campaigns Performance report." />
+  <link rel="stylesheet" href="css/portal.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header id="site-header">
+    <a id="brand-logo" href="portal.html" aria-label="Home">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="50" cy="50" r="48" fill="#1565C0"/>
+        <g stroke="#ffffff" stroke-width="9" stroke-linecap="round">
+          <line x1="50" y1="10" x2="50" y2="90"/>
+          <line x1="10" y1="50" x2="90" y2="50"/>
+          <line x1="20" y1="20" x2="80" y2="80"/>
+          <line x1="80" y1="20" x2="20" y2="80"/>
+        </g>
+        <circle cx="50" cy="50" r="8" fill="#ffffff"/>
+      </svg>
+      <span id="brand-name">InterEQ</span>
+    </a>
+    <span id="brand-subtitle">Corporate Portal</span>
+  </header>
+
+  <!-- NAV -->
+  <nav id="main-nav" aria-label="Main navigation">
+    <ul role="list">
+      <li><a href="portal.html" data-page="news" data-testid="nav-news">News</a></li>
+      <li><a href="contacts.html" data-page="contacts" data-testid="nav-contacts">Contacts</a></li>
+      <li><a href="reports.html" data-page="reports" data-testid="nav-reports">Reports</a></li>
+      <li><a href="operations.html" data-page="operations" data-testid="nav-operations">Operations</a></li>
+      <li><a href="sales.html" data-page="sales" data-testid="nav-sales">Sales</a></li>
+      <li><a href="tools.html" data-page="tools" data-testid="nav-tools">Tools</a></li>
+      <li><a href="files.html" data-page="files" data-testid="nav-files">Files</a></li>
+      <li><a href="publish.html" data-page="publish" data-testid="nav-publish">Publish</a></li>
+      <li><a href="#" id="nav-logout" data-testid="nav-logout">Logout</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE BODY -->
+  <div id="page-wrapper">
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar" aria-label="Report filters" data-testid="report-sidebar">
+      <div class="sidebar-title">Remove from Favorites</div>
+
+      <label class="sidebar-label" for="sb-platform">Platform:</label>
+      <select id="sb-platform" class="sidebar-select" data-testid="sb-platform">
+        <option value="US" selected>United States</option>
+        <option value="CA">Canada</option>
+        <option value="ALL">All Platforms</option>
+      </select>
+
+      <label class="sidebar-label" for="sb-channel">Channel:</label>
+      <select id="sb-channel" class="sidebar-select" data-testid="sb-channel">
+        <option value="" selected>-- Any Channel --</option>
+        <option value="LSA">LSA</option>
+        <option value="Display">Display</option>
+        <option value="SEM">SEM</option>
+      </select>
+
+      <label class="sidebar-label" for="sb-cio">CIO:</label>
+      <input id="sb-cio" class="sidebar-input" type="text" data-testid="sb-cio" />
+
+      <label class="sidebar-label" for="sb-maid">MAID:</label>
+      <input id="sb-maid" class="sidebar-input" type="text" data-testid="sb-maid" />
+
+      <label class="sidebar-label" for="sb-bid">BID:</label>
+      <input id="sb-bid" class="sidebar-input" type="text" data-testid="sb-bid" />
+
+      <div class="sidebar-label">Limit Search To:</div>
+      <div class="sidebar-checkbox-group">
+        <label class="sidebar-checkbox-item">
+          <input type="checkbox" id="cb-show-all" checked data-testid="cb-show-all" />
+          Show All
+        </label>
+        <label class="sidebar-checkbox-item">
+          <input type="checkbox" id="cb-alerts-only" data-testid="cb-alerts-only" />
+          Alerts Only
+        </label>
+      </div>
+
+      <button class="btn-run-report" id="btn-run-report" data-testid="btn-run-report">Run Report</button>
+
+      <div class="columns-section">
+        <div class="columns-title">Columns To Display:</div>
+        <label class="col-item"><input type="checkbox" checked data-testid="col-cid" /> CID</label>
+        <label class="col-item"><input type="checkbox" checked data-testid="col-mcid" /> MCID</label>
+        <label class="col-item"><input type="checkbox" checked data-testid="col-aid" /> AID</label>
+        <label class="col-item"><input type="checkbox" checked data-testid="col-maid" /> MAID</label>
+        <label class="col-item"><input type="checkbox" checked data-testid="col-bid" /> BID</label>
+        <label class="col-item"><input type="checkbox" checked data-testid="col-business-name" /> Buisness Name</label>
+        <label class="col-item"><input type="checkbox" checked data-testid="col-budget" /> Budget</label>
+        <label class="col-item"><input type="checkbox" checked data-testid="col-spent" /> Spent</label>
+        <label class="col-item"><input type="checkbox" checked data-testid="col-start" /> Start</label>
+        <label class="col-item"><input type="checkbox" checked data-testid="col-campaign-created" /> Campaign Created</label>
+        <label class="col-item"><input type="checkbox" checked data-testid="col-paid" /> Paid</label>
+        <label class="col-item"><input type="checkbox" checked data-testid="col-status" /> Status</label>
+        <label class="col-item"><input type="checkbox" checked data-testid="col-ar-status" /> AR Status</label>
+        <label class="col-item"><input type="checkbox" checked data-testid="col-channel" /> Channel</label>
+        <label class="col-item"><input type="checkbox" checked data-testid="col-client-id" /> Client ID</label>
+        <label class="col-item"><input type="checkbox" checked data-testid="col-offer-id" /> Offer ID</label>
+        <label class="col-item"><input type="checkbox" checked data-testid="col-payment-method" /> Payment Method</label>
+        <label class="col-item"><input type="checkbox" checked data-testid="col-contract-length" /> Contract Length</label>
+        <label class="col-item"><input type="checkbox" checked data-testid="col-offer-name" /> Offer Name</label>
+        <label class="col-item"><input type="checkbox" checked data-testid="col-wpc-status" /> Wpc Status</label>
+        <label class="col-item"><input type="checkbox" checked data-testid="col-wpc-end-date" /> Wpc End Date</label>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main id="main-content">
+      <h1 id="report-title" data-testid="report-title">LSA Campaigns Performance</h1>
+
+      <div id="report-table-wrap">
+        <table id="report-table" aria-label="LSA Campaigns Performance data">
+          <thead id="report-thead">
+            <!-- columns built dynamically from CSV header row -->
+          </thead>
+          <tbody id="report-tbody" data-testid="report-tbody">
+            <tr><td colspan="22" style="text-align:center;padding:20px;color:#999;">Loading data…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <!-- REPORT FOOTER -->
+  <div id="report-footer" role="contentinfo">
+    <div id="pagination-controls" data-testid="pagination-controls" aria-label="Pagination"></div>
+
+    <div id="footer-actions" data-testid="footer-actions">
+      <a href="#" data-testid="action-show-all">Show All</a>
+      <span class="bullet">•</span>
+      <a href="#" data-testid="action-print">Print</a>
+      <span class="bullet">•</span>
+      <a href="#" data-testid="action-export">Export</a>
+    </div>
+
+    <div id="results-counter" data-testid="results-counter"></div>
+  </div>
+
+  <footer id="copyright-bar">
+    © <a href="#">Garnet Co., Inc.</a> 2026. All Rights Reserved.
+  </footer>
+
+  <script src="js/portal.js"></script>
+  <script>
+    requireAuth();
+    initNav('reports');
+
+    var allRows = [];
+    var csvHeaders = [];
+
+    // Robust CSV parser — handles quoted fields containing commas/newlines
+    function parseCSV(text) {
+      var rows = [];
+      var lines = text.split(/\r?\n/);
+      for (var i = 0; i < lines.length; i++) {
+        if (!lines[i].trim()) continue;
+        rows.push(splitCSVLine(lines[i]));
+      }
+      return rows;
+    }
+
+    function splitCSVLine(line) {
+      var result = [];
+      var cur = '';
+      var inQuotes = false;
+      for (var i = 0; i < line.length; i++) {
+        var c = line[i];
+        if (c === '"') {
+          if (inQuotes && line[i+1] === '"') { cur += '"'; i++; }
+          else { inQuotes = !inQuotes; }
+        } else if (c === ',' && !inQuotes) {
+          result.push(cur.trim()); cur = '';
+        } else {
+          cur += c;
+        }
+      }
+      result.push(cur.trim());
+      return result;
+    }
+
+    function makeRow(row, i) {
+      var tr = document.createElement('tr');
+      tr.setAttribute('data-testid', 'row-' + i);
+      var cells = '';
+      for (var j = 0; j < row.length; j++) {
+        cells += '<td>' + (row[j] || '') + '</td>';
+      }
+      tr.innerHTML = cells;
+      return tr;
+    }
+
+    function buildHeader(headers) {
+      var thead = document.getElementById('report-thead');
+      var tr = document.createElement('tr');
+      for (var j = 0; j < headers.length; j++) {
+        var th = document.createElement('th');
+        th.textContent = headers[j];
+        tr.appendChild(th);
+      }
+      thead.innerHTML = '';
+      thead.appendChild(tr);
+      // Update colspan on loading row
+      var loadTd = document.querySelector('#report-tbody td');
+      if (loadTd) loadTd.setAttribute('colspan', headers.length);
+    }
+
+    function loadReport() {
+      var tbody = document.getElementById('report-tbody');
+      tbody.innerHTML = '<tr><td colspan="20" style="text-align:center;padding:20px;color:#999;">Loading data\u2026</td></tr>';
+      fetch('data/TBA.csv?t=' + new Date().getTime())
+        .then(function(r) {
+          if (!r.ok) throw new Error('CSV not found');
+          return r.text();
+        })
+        .then(function(text) {
+          var rows = parseCSV(text);
+          if (rows.length < 2) throw new Error('Empty CSV');
+          csvHeaders = rows[0];
+          allRows = rows.slice(1);
+          buildHeader(csvHeaders);
+          renderPage(allRows, 1, tbody, makeRow, 'pagination-controls', 'results-counter');
+        })
+        .catch(function(err) {
+          tbody.innerHTML = '<tr><td colspan="20" style="text-align:center;color:#cc0000;">Could not load TBA.csv — ' + err.message + '.<br>Place your CSV file at <strong>data/TBA.csv</strong> and refresh.</td></tr>';
+        });
+    }
+
+    document.getElementById('btn-run-report').addEventListener('click', loadReport);
+    loadReport();
+
+    // Export button — downloads full dataset as CSV
+    document.querySelector('[data-testid="action-export"]').addEventListener('click', function(e) {
+      e.preventDefault();
+      exportCSV(csvHeaders, allRows, 'LSA_Campaigns_Performance.csv');
+    });
+  </script>
+</body>
+</html>

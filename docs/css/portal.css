@@ -1,0 +1,302 @@
+/* ============================================================
+   InterIQ Enterprise Portal — Shared Styles
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --nav-blue:    #0000cc;
+  --nav-hover:   #ff6600;
+  --nav-active:  #000000;
+  --brand-blue:  #2196F3;
+  --brand-dark:  #1565C0;
+  --sidebar-bg:  #2196F3;
+  --sidebar-txt: #ffffff;
+  --row-hover:   #ffffcc;
+  --border:      #cccccc;
+  --gray-light:  #f5f5f5;
+  --gray-mid:    #dddddd;
+  --gray-text:   #444444;
+  --link-blue:   #0000cc;
+  --white:       #ffffff;
+  --font:        Arial, Helvetica, sans-serif;
+}
+
+html, body { height: 100%; font-family: var(--font); font-size: 13px; color: var(--gray-text); background: var(--white); }
+
+/* ── HEADER / BRANDING ───────────────────────────────────── */
+#site-header {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 4px 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+}
+
+#brand-logo svg { width: 36px; height: 36px; flex-shrink: 0; }
+
+#brand-name {
+  font-size: 22px;
+  font-weight: 700;
+  color: #003399;
+  letter-spacing: -0.5px;
+}
+
+#brand-subtitle {
+  font-size: 13px;
+  color: #777;
+  margin-left: 4px;
+}
+
+/* ── NAVIGATION BAR ──────────────────────────────────────── */
+#main-nav {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 3px 10px;
+}
+
+#main-nav ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+#main-nav ul li { display: flex; align-items: center; }
+
+#main-nav ul li + li::before {
+  content: "|";
+  color: #999;
+  padding: 0 6px;
+  font-size: 12px;
+}
+
+#main-nav ul li a {
+  color: var(--nav-blue);
+  text-decoration: none;
+  font-size: 13px;
+  padding: 2px 0;
+  transition: color 0.15s;
+}
+
+#main-nav ul li a:hover { color: var(--nav-hover); }
+#main-nav ul li a.active { color: var(--nav-active); font-weight: bold; }
+
+#nav-logout { cursor: pointer; }
+
+/* ── PAGE LAYOUT ─────────────────────────────────────────── */
+#page-wrapper {
+  display: flex;
+  min-height: calc(100vh - 74px); /* minus header+nav */
+}
+
+#sidebar {
+  width: 12%;
+  min-width: 170px;
+  background: var(--sidebar-bg);
+  padding: 8px 6px;
+  flex-shrink: 0;
+}
+
+#main-content {
+  flex: 1;
+  padding: 10px 14px;
+  overflow-x: auto;
+}
+
+/* ── SIDEBAR FORM ────────────────────────────────────────── */
+.sidebar-title {
+  color: var(--white);
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.sidebar-label {
+  color: var(--white);
+  font-size: 11px;
+  font-weight: bold;
+  display: block;
+  margin-top: 7px;
+  margin-bottom: 2px;
+}
+
+.sidebar-input,
+.sidebar-select {
+  width: 100%;
+  font-size: 11px;
+  padding: 2px 3px;
+  border: 1px solid #aaa;
+  background: var(--white);
+  color: #000;
+}
+
+.sidebar-listbox {
+  width: 100%;
+  font-size: 11px;
+  background: var(--white);
+  border: 1px solid #aaa;
+  color: #000;
+  height: 80px;
+}
+
+.sidebar-checkbox-group { margin-top: 4px; }
+
+.sidebar-checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--white);
+  font-size: 11px;
+  margin-bottom: 2px;
+}
+
+.sidebar-checkbox-item input[type="checkbox"] { margin: 0; }
+
+.btn-run-report {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  padding: 4px 0;
+  background: var(--brand-blue);
+  border: 2px outset #1a88f0;
+  color: var(--white);
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+}
+
+.btn-run-report:hover { background: var(--brand-dark); }
+
+.columns-section { margin-top: 8px; }
+
+.columns-title {
+  color: var(--white);
+  font-size: 11px;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.col-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--white);
+  font-size: 11px;
+  margin-bottom: 1px;
+}
+
+.col-item input[type="checkbox"] { margin: 0; }
+
+/* ── REPORT TABLE ────────────────────────────────────────── */
+#report-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 8px;
+}
+
+#report-table-wrap { overflow-x: auto; }
+
+#report-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 12px;
+}
+
+#report-table th {
+  background: var(--white);
+  border-bottom: 2px solid #aaa;
+  padding: 4px 6px;
+  text-align: left;
+  white-space: nowrap;
+  color: var(--link-blue);
+  cursor: pointer;
+}
+
+#report-table th:hover { text-decoration: underline; }
+
+#report-table td {
+  padding: 4px 6px;
+  border-bottom: 1px solid #e0e0e0;
+  vertical-align: top;
+}
+
+#report-table tbody tr:hover { background: var(--row-hover); }
+
+/* ── FOOTER ──────────────────────────────────────────────── */
+#report-footer {
+  background: var(--gray-light);
+  border-top: 1px solid var(--border);
+  padding: 6px 14px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--gray-text);
+}
+
+#pagination-controls { display: flex; align-items: center; gap: 2px; }
+
+.page-link {
+  color: var(--link-blue);
+  text-decoration: none;
+  padding: 1px 5px;
+  font-size: 12px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  background: none;
+  font-family: var(--font);
+}
+
+.page-link:hover { background: var(--row-hover); }
+.page-link.active { font-weight: bold; color: #000; border-color: #aaa; }
+
+#footer-actions { display: flex; align-items: center; gap: 4px; }
+#footer-actions a { color: var(--link-blue); text-decoration: none; font-size: 12px; }
+#footer-actions a:hover { text-decoration: underline; }
+.bullet { color: #333; }
+
+#results-counter { font-size: 12px; }
+#results-counter strong { font-weight: bold; }
+
+#copyright-bar {
+  background: var(--gray-light);
+  border-top: 1px solid var(--border);
+  padding: 4px 14px;
+  font-size: 11px;
+  color: #777;
+}
+
+#copyright-bar a { color: var(--link-blue); }
+
+/* ── GENERIC PAGE CONTENT ────────────────────────────────── */
+.page-content { padding: 20px; color: #333; line-height: 1.6; }
+.page-content h1 { font-size: 18px; margin-bottom: 12px; }
+
+/* ── REPORTS LANDING ─────────────────────────────────────── */
+.reports-list { list-style: disc; padding-left: 24px; margin-top: 12px; }
+.reports-list li { margin-bottom: 8px; }
+.reports-list a { color: var(--link-blue); font-size: 14px; }
+.reports-list a:hover { text-decoration: underline; color: var(--nav-hover); }
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 768px) {
+  #sidebar { width: 160px; min-width: 140px; }
+  #brand-name { font-size: 18px; }
+}
+
+@media (max-width: 520px) {
+  #page-wrapper { flex-direction: column; }
+  #sidebar { width: 100%; min-width: unset; }
+}
